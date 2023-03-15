@@ -1,0 +1,31 @@
+* {
+    font-family: "DMSans",serif;
+    font-style: normal;
+    font-weight: 400;
+}
+.qIcon{
+    font-weight: 400;
+}
+.qButton{
+    padding: 8px 0;
+    width: 40px;
+    height: 24px;
+    border-radius: 6px;
+    /* gimp help with colors  */
+}
+input{
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-radius: 6px;
+    transition: .15s;
+    padding: 8px 16px;
+    height: 40px;
+    border: 1px solid var(--color-border); /* gimp help  */
+    outline: 0;
+    margin: 0 8px 0 0;
+}
