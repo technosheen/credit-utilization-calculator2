@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Card(props) {
     const { index } = props;
+
     const doSomething = () => {
         console.log('clicked help button');
     };

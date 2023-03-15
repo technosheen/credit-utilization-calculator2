@@ -79,3 +79,10 @@ input:active{
 .submit:hover{
     background-color: #1d3694;
 }
+
+.red{
+    color: rgb(131, 7, 7);
+}
+.blue{
+    color: #1d3694;
+}
