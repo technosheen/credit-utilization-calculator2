@@ -30,8 +30,8 @@ export default function Card(props) {
                 </div>
             </div>
             <div className='inputRow'>
-                <input onChange={handleInput} name='balance' id={'balance' + index}></input>
-                <input onChange={handleInput} name='limit' id={'limit' + index}></input>
+                <input onChange={handleInput} value={cardObj.balance ? cardObj.balance : ''} name='balance' id={'balance' + index}></input>
+                <input onChange={handleInput} value={cardObj.limit ? cardObj.limit : ''} name='limit' id={'limit' + index}></input>
             </div>
         </div>
     );
