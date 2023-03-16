@@ -1,40 +1,37 @@
 import React, {useState, useEffect} from "react";
 
 export default function Card(props) {
-    const { update, card } = props;
-    // const [balance, setBalance] = useState(card.balance);
-    // const [limit, setLimit] = useState(card.limit);
+    const { update, card, index } = props;
+    const [cardObj, setCardObj] = useState(card);
+
+    useEffect(() => {
+        update(cardObj, index); // Update parent whenever child changes
+    }, [cardObj]);
+
+    const handleInput = e => {
+        const {name, value} = e.target;
+        if (cardObj[name] !== value) { // Update child whenever input changes
+            setCardObj({...cardObj, [name]: value});
+        }
+    };
 
     const doSomething = () => {
         console.log('clicked help button');
     };
 
-    // const addBalance = (e) => {
-    //     setBalance(e.target.value);
-    // };
-
-    // const addLimit = (e) => {
-    //     setLimit(e.target.value);
-    // };
-
-    // useEffect(() => {
-    //     update(card.id, balance, limit);
-    // }, [balance, limit]);
-    //onBlur={addBalance}
-    // onBlur={addLimit}
 
     return (
         <div className='card'>
             <div className='inputLabels'>
-                <label htmlFor={'balance' + card.id}>{'Card' + card.id + 'balance'}</label>
+                <label htmlFor={'balance' + index}>{'Card ' + (index + 1) + ' balance'}</label>
                 <div className='helpDiv'>
-                    <label htmlFor={'limit' + card.id}>{'Card' + card.id + 'limit'}</label>
+                    <label htmlFor={'limit' + index}>{'Card ' + (index + 1) + ' limit'}</label>
                     <button className='helpButton' onClick={doSomething}>?</button>
                 </div>
             </div>
             <div className='inputRow'>
-                <input id={'balance' + card.id}></input>
-                <input id={'limit' + card.id}></input>
+                <input onChange={handleInput} name='balance' id={'balance' + index}></input>
+                <input onChange={handleInput} name='limit' id={'limit' + index}></input>
             </div>
         </div>
     );
