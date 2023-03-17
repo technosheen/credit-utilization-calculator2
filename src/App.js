@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import uniqid from 'uniqid';
 import Card from './components/Card';
 import Results from './components/Results';
@@ -7,14 +7,29 @@ export default function App() {
   const [cards, setCards] = useState([{balance: 0, limit: 0, usage: 0}]);
   const [totalCreditUsage, setTotalCreditUsage] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [isMax, setIsMax] = useState(false);
+
+  useEffect(() => {
+    setIsMax( cards.length === 5 ? true : false); 
+}, [cards]);
 
 
   const addCardField = (e) => {
     e.preventDefault();
+    // Create new card object
     let newCard = {balance: 0, limit: 0, usage: 0};
 
     // Add new card object to cards array
     setCards(() => cards.concat(newCard));
+  };
+
+  const rmCardField = (e) => {
+    e.preventDefault();
+    // Find last card in cards array
+    let rmIndex = cards.length - 1;
+
+    // Add remove last card object from cards array
+    setCards(cards.splice(0, rmIndex));
   };
 
 
@@ -25,6 +40,7 @@ export default function App() {
 
     setCards(() => {
       if (balanceOG !== card.balance || limitOG !== card.limit) {
+        // Add user input values
         cards[index] = card;
       }
       return cards;
@@ -82,7 +98,19 @@ export default function App() {
             })
           }
         </form>
-        <button className='addBtn' onClick={addCardField}>Add Card</button>
+        <div className='addButtonRow'>
+        <button 
+            onClick={rmCardField}
+            className={cards.length > 1 ? 'addBtn' : 'hideBtn'}>
+              Remove Card
+          </button>
+          <button 
+            disabled={isMax} 
+            onClick={addCardField} 
+            className={isMax ? 'disabledBtn' : 'addBtn'}>
+              Add Card
+          </button>
+        </div>
         <div className='buttonRow'>
           <button className='submit' onClick={handleCalculate}>Calculate</button>
         </div>

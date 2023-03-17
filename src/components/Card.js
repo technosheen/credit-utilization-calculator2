@@ -5,7 +5,9 @@ export default function Card(props) {
     const [cardObj, setCardObj] = useState(card);
 
     const getValue = (value) => {
-        return value ? value : '';
+        // Remove '$' from value if present
+        value = value[0] === '$'? value.substring(1) : value;
+        return value ?  ('$' + value) : '';
     };
 
     // Update parent whenever child changes
@@ -15,13 +17,15 @@ export default function Card(props) {
 
     // Update child whenever input changes
     const handleInput = e => {
-        const {name, value} = e.target;
+        let {name, value} = e.target;
+        // Remove '$' from value if present
+        value = value[0] === '$'? value.substring(1) : value;
         if (cardObj[name] !== value) { 
             setCardObj({...cardObj, [name]: value});
         }
     };
 
-    const doSomething = () => { //TODO: implement popover
+    const doSomething = () => { // TODO: implement popover
         console.log('clicked help button');
     };
 

@@ -104,7 +104,11 @@ output{
     margin: 0.6em 0 1.5em 0;
 }
 
-
+.addButtonRow{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 .buttonRow{
     display: flex;
     padding: 1.2em 0;
@@ -112,8 +116,19 @@ output{
     width: 100%;
 }
 
-.addBtn{
-    float: right;
+.addBtn,
+.disabledBtn{
+    width: 121px;
+}
+
+.disabledBtn{
+    border-style: solid;
+    border-radius: 6px;
+    padding: 7px 15px;
+}
+
+.hideBtn{
+    display: none;
 }
 
 .submit{
@@ -123,9 +138,9 @@ output{
 
 .addBtn,
 .submit{
-    border: none;
     border-radius: 6px;
     padding: 8px 16px;
+    border: none;
     color: white;
     background-color: #1a3eca;
 }
