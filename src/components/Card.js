@@ -50,6 +50,7 @@ export default function Card(props) {
         });
     
         // Update cards array in parent
+        value = !value ? 0 : value;
         update({...cardObj, [name]: value}, index);
     };
 
