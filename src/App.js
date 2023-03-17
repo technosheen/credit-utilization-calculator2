@@ -11,15 +11,18 @@ export default function App() {
 
   const addCardField = (e) => {
     e.preventDefault();
-    setCards(() => cards.concat({balance: 0, limit: 0, usage: 0}));
+    let newCard = {balance: 0, limit: 0, usage: 0};
+
+    // Add new card object to cards array
+    setCards(() => cards.concat(newCard));
   };
+
 
   const updateCard = (card, index) => { 
     // Original card values
-    let balanceOG = cards[index].balance;
-    let limitOG = cards[index].limit;
+    const balanceOG = cards[index].balance;
+    const limitOG = cards[index].limit;
 
-    // If values have changed
     setCards(() => {
       if (balanceOG !== card.balance || limitOG !== card.limit) {
         cards[index] = card;
@@ -28,39 +31,54 @@ export default function App() {
     });
   };
 
+
+  // NOTE: Formula for percent usage -- balance * 100 / limit
   const handleCalculate = (e) => {
     e.preventDefault();
-    console.log(cards);
-    let subtotals = {balance: 0, limit: 0};
-    cards.forEach(card => { // change to map
-      // Get percent usage: balance * 100 / limit
-      if (!card.limit) return;
-      card.usage = (card.balance * 100) / card.limit;
+    // For tracking total credit usage
+    let subtotals = {balance: 0, limit: 0}; 
+    
+    cards.forEach(card => {
+      if (!card.limit) return; // Avoid dividing by zero
+
+      // Calculate single card usage
+      card.usage = ((card.balance * 100) / card.limit).toFixed(2);
+
+      // Track total credit usage
       subtotals.balance += card.balance;
       subtotals.limit += card.limit;
     })
+
+    // If fields are empty, throw error
     if (!subtotals.balance && !subtotals.limit) {
       // displayError
       return;
     }
-    setTotalCreditUsage((subtotals.balance * 100) / subtotals.limit);
-    setShowResults(true)
+
+    // Calculate total credit usage
+    const total = ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
+    setTotalCreditUsage(total);
+
+    // Display results
+    setShowResults(true);
   };
 
-  // useEffect(() =>{
-  //   setShowResults(true);
-  // }, [totalCreditUsage]);
 
   return (
     <div id='app'>
       <h1 className='mainHeader'>Credit Utilization Calculator</h1>
       <div className='calculator'>
         <form>
-          {console.log('64 cards: ', cards)}
           {
             cards.map( (card, index) => {
-              console.log('rendering card ', index);
-              return<Card update={updateCard} card={card} index={index} import key={uniqid()}></Card>
+              return (
+                <Card 
+                  card={card}
+                  index={index}
+                  import key={uniqid()}
+                  update={updateCard}
+                />
+              )
             })
           }
         </form>
@@ -70,7 +88,7 @@ export default function App() {
         </div>
         {
           showResults ? 
-          <Results totalUsage={totalCreditUsage} cards={cards}></Results>
+          <Results totalUsage={totalCreditUsage} cards={cards}/>
           :
           null
         }

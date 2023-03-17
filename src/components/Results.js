@@ -1,17 +1,33 @@
 import React from "react";
+import uniqid from 'uniqid';
 
 export default function Results(props) { 
     const { totalUsage, cards } = props;
 
+    const checkUsage = (usage) => {
+        return usage > 30.0 ? 'red' : 'black';
+    }
+
     return (
         <div>
-            <h5>{ 'Total Credit Usage: ' + totalUsage + ' %' }</h5>
+            <div className='usageRow'>
+                <label className='outputLabels' for='totalUsage'>
+                    Total Credit Usage:
+                </label>
+                <output className={checkUsage(totalUsage)} id='totalUsage'>
+                    { totalUsage + '%' }
+                </output>
+            </div>
             {
-                cards.forEach((card, index) => {
+                cards.map((card, index) => {
                     return(
-                        <div>
-                            <h5>{ 'Card' + index + 'Usage: '}</h5>
-                            <h5 className={card.usage > 30.0 ? 'red' : 'blue'}>{card.usage + '%'}</h5>
+                        <div className='usageRow' key={uniqid()}>
+                            <label className='outputLabels' for={'output' + (index + 1)}>
+                                { 'Card ' + index + ' Usage:'}
+                            </label>
+                            <output id={'output' + index} className={checkUsage(card.usage)}>
+                                {card.usage + '%'}
+                            </output>
                         </div>
                     );
                 })
