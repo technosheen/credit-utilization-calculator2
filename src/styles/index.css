@@ -7,12 +7,16 @@ body{
 form{
     max-width: 9999px!important;
 }
-input {
-    width: 45%;
-}
 button:hover{
     cursor: pointer;
 }
+button:disabled:hover{
+    cursor: default;
+}
+input {
+    width: 45%;
+}
+
 
 #app{
     display: flex;

@@ -34,6 +34,7 @@ export default function App() {
 
 
   const updateCard = (card, index) => { 
+    console.log('parent: ', card.balance)
     // Original card values
     const balanceOG = cards[index].balance;
     const limitOG = cards[index].limit;

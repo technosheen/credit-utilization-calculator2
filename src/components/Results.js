@@ -23,7 +23,7 @@ export default function Results(props) {
                     return(
                         <div className='usageRow' key={uniqid()}>
                             <label className='outputLabels' for={'output' + (index + 1)}>
-                                { 'Card ' + index + ' Usage:'}
+                                { 'Card ' + (index + 1) + ' Usage:'}
                             </label>
                             <output id={'output' + index} className={checkUsage(card.usage)}>
                                 {card.usage + '%'}
