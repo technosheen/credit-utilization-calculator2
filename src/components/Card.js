@@ -24,7 +24,8 @@ const unstyleValue = (value) => {
 
 
 export default function Card(props) {
-    const { update, card, index } = props;
+    const { card, index, update, modalDisplay} = props;
+
     const [cardObj, setCardObj] = useState(card);
     const [displayValues, setDisplayValues] = useState({
         balance: styleValue(cardObj.balance),
@@ -61,8 +62,8 @@ export default function Card(props) {
     }, [cardObj]);
 
 
-    const doSomething = () => { // TODO: implement popover
-        console.log('clicked help button');
+    const handleHelp = () => { // TODO: implement popover
+        modalDisplay();
     };
 
 
@@ -76,7 +77,7 @@ export default function Card(props) {
                     <label htmlFor={'limit' + index}>
                         {'Card ' + (index + 1) + ' limit'}
                     </label>
-                    <button className='helpButton' onClick={doSomething}>?</button>
+                    <button className='helpButton' onClick={handleHelp}>?</button>
                 </div>
             </div>
             <div className='inputRow'>

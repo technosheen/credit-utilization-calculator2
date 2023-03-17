@@ -6,8 +6,13 @@ import Results from './components/Results';
 export default function App() {
   const [cards, setCards] = useState([{balance: 0, limit: 0, usage: 0}]);
   const [totalCreditUsage, setTotalCreditUsage] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isMax, setIsMax] = useState(false);
+
+  const modalDisplay = () => {
+    setShowModal(!showModal);
+  };
 
   useEffect(() => {
     setIsMax( cards.length === 5 ? true : false); 
@@ -83,6 +88,12 @@ export default function App() {
 
   return (
     <div id='app'>
+      <div onClick={modalDisplay} className={showModal ? 'popoverShadow' : 'hide'}>
+        <div className='popover'>
+          <h5 className='popoverHeading'>Card Balance / Limit</h5>
+          <p className='popoverBody'>Your card's balance and limit can be found on the credit card statement.</p>
+        </div>
+      </div>
       <h1 className='mainHeader'>Credit Utilization Calculator</h1>
       <div className='calculator'>
         <form>
@@ -94,6 +105,7 @@ export default function App() {
                   index={index}
                   import key={uniqid()}
                   update={updateCard}
+                  modalDisplay={modalDisplay}
                 />
               )
             })
@@ -102,7 +114,7 @@ export default function App() {
         <div className='addButtonRow'>
         <button 
             onClick={rmCardField}
-            className={cards.length > 1 ? 'addBtn' : 'hideBtn'}>
+            className={cards.length > 1 ? 'addBtn' : 'hide'}>
               Remove Card
           </button>
           <button 
