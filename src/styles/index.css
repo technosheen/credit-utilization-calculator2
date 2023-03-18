@@ -1,5 +1,5 @@
 * {
-    font-family: "DMSans",serif;
+    font-family: 'DM Sans', sans-serif;
 }
 body{
     background-color: #fafbfe;
@@ -7,6 +7,7 @@ body{
 form{
     max-width: 9999px!important;
 }
+summary:hover,
 button:hover{
     cursor: pointer;
 }
@@ -18,6 +19,10 @@ input {
     font-size: 15px;
     line-height: 20px;
     letter-spacing: .005em;
+    font-weight: 400;
+}
+label{
+    font-weight: 700;
 }
 
 
@@ -54,7 +59,7 @@ input {
     font-size: 13px;
     display: flex;
     justify-content: space-between;
-    margin: 0.6em;
+    margin-top: 0.6em;
 }
 .helpDiv{
     width: 45%;
@@ -67,17 +72,6 @@ input {
     margin: 0.6em 0 1.5em 0;
 }
 
-.helpButton{
-    font-size: 15px;
-    padding: 0px 5px;
-    color: #1a3eca;
-    border: 2px solid #1a3eca;
-    border-radius: 20px;
-    background-color: #fff;
-}
-.helpButton:hover{
-    border-color: #1d3694;
-}
 
 input,
 output{
@@ -130,17 +124,12 @@ output{
 .addBtn,
 .disabledBtn,
 .submit{
+    border-radius: 6px;
     font-size: 14px;
-}
-
-.addBtn,
-.disabledBtn{
-    width: 110px;
 }
 
 .disabledBtn{
     border-style: solid;
-    border-radius: 6px;
     padding: 7px 15px;
 }
 
@@ -149,14 +138,16 @@ output{
 }
 
 .submit{
+    padding: 8px 16px;
     min-width: 40px;
     min-height: 40px;
+}
+.addBtn{
+    padding: 8px;
 }
 
 .addBtn,
 .submit{
-    border-radius: 6px;
-    padding: 8px 16px;
     border: none;
     color: white;
     background-color: #1a3eca;
@@ -167,20 +158,58 @@ output{
 }
 
 
-.popoverShadow{
-    display: flex;
-    align-items: flex-start;
+/* help button */
+summary {
+    list-style: none;
+    font-size: 15px;
+    padding: 0.3px 4.6px 0 4.6px;
+    color: #1a3eca;
+    border: 2px solid #1a3eca;
+    border-radius: 20px;
+    background-color: #fff;
+    font-weight: 700;
+}
+.helpButton:hover{
+    border-color: #1d3694;
+}
+
+/* popover */
+details {
+    display: inline;
+    position: relative;
+}
+details > summary:focus {
+    outline: none;
+}
+details > summary::-webkit-details-marker {
+    display: none;
+}
+details > summary + * {
+    position: absolute;
+    z-index: 1;
+    border: none;
+    background: white;
+}
+/* hide detail elements that would ruin the popover */
+/* details > * + * { 
+display: none;
+} */
+
+/* .popoverShadow{
+    
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: relative; 
     z-index: 1;
     left: 0;
     top: 0;
     overflow: auto;
     background-color: rgba(0,0,0,0);
     justify-content: flex-end;
-}
+} */
 .popover{
+    top: calc(0.5rem + 100%);
+    transform: translateX(-75%);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -188,18 +217,18 @@ output{
     background-color: #fff;
     border-radius: 4px;
     padding: 20px;
-    margin: 12vh 5vw 0 0;
-    width: min-content;
-    min-width: 300px;
-    max-width: 90vw;
+    margin: 0.06em;
+    width: 205px;
     box-shadow: 0px 4px 10px 1px #7e7e7e;
 }
 .popoverHeading{
     font-size: 15px;
+    font-weight: 500;
     margin: 0px;
 }
 .popoverBody{
     font-size: 12px;
+    color: #676C7E;
     margin: 0px;
 }
 

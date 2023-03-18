@@ -24,7 +24,7 @@ const unstyleValue = (value) => {
 
 
 export default function Card(props) {
-    const { card, index, update, modalDisplay} = props;
+    const { card, index, update, togglePopover} = props;
 
     const [cardObj, setCardObj] = useState(card);
     const [displayValues, setDisplayValues] = useState({
@@ -64,7 +64,7 @@ export default function Card(props) {
 
 
     const handleHelp = () => { // TODO: implement popover
-        modalDisplay();
+        togglePopover();
     };
 
 
@@ -78,7 +78,13 @@ export default function Card(props) {
                     <label htmlFor={'limit' + index}>
                         {'Card ' + (index + 1) + ' limit'}
                     </label>
-                    <button className='helpButton' onClick={handleHelp}>?</button>
+                    <details>
+                        <summary>?</summary>
+                        <div className='popover'>
+                            <h5 className='popoverHeading'>Card Balance / Limit</h5>
+                            <p className='popoverBody'>Your card's balance and limit can be found on your credit card statement.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
             <div className='inputRow'>
