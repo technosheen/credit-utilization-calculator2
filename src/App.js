@@ -6,13 +6,8 @@ import Results from './components/Results';
 export default function App() {
   const [cards, setCards] = useState([{balance: 0, limit: 0, usage: 0}]);
   const [totalCreditUsage, setTotalCreditUsage] = useState(0);
-  const [popoverShadow, setPopoverShadow] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isMax, setIsMax] = useState(false);
-
-  const togglePopover = () => {
-    setPopoverShadow(!popoverShadow);
-  };
 
   useEffect(() => {
     setIsMax( cards.length === 5 ? true : false); 
@@ -21,25 +16,20 @@ export default function App() {
 
   const addCardField = (e) => {
     e.preventDefault();
-    // Create new card object
+    // Create and add new card
     let newCard = {balance: 0, limit: 0, usage: 0};
-
-    // Add new card object to cards array
     setCards(() => cards.concat(newCard));
   };
 
   const rmCardField = (e) => {
     e.preventDefault();
-    // Find last card in cards array
+    // Find and remove last card 
     let rmIndex = cards.length - 1;
-
-    // Add remove last card object from cards array
     setCards(cards.splice(0, rmIndex));
   };
 
 
   const updateCard = (card, index) => { 
-    console.log('parent: ', card.balance)
     // Original card values
     const balanceOG = cards[index].balance;
     const limitOG = cards[index].limit;
@@ -57,39 +47,31 @@ export default function App() {
   // NOTE: Formula for percent usage -- balance * 100 / limit
   const handleCalculate = (e) => {
     e.preventDefault();
-    // For tracking total credit usage
-    let subtotals = {balance: 0, limit: 0}; 
+    let subtotals = {balance: 0, limit: 0};
     
     cards.forEach(card => {
-      if (!card.limit) return; // Avoid dividing by zero
-
-      // Calculate single card usage
+      if (!card.limit) return; // Don't divide by zero
+      // Calculate single card usage & aggregate totals
       card.usage = ((card.balance * 100) / card.limit).toFixed(2);
-
-      // Track total credit usage
       subtotals.balance += card.balance;
       subtotals.limit += card.limit;
     })
 
     // If fields are empty, throw error
     if (!subtotals.balance && !subtotals.limit) {
-      // displayError
+      // TODO: displayError
       return;
     }
 
-    // Calculate total credit usage
+    // Calculate total credit usage & display results
     const total = ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
     setTotalCreditUsage(total);
-
-    // Display results
     setShowResults(true);
   };
 
 
   return (
     <div id='app'>
-      {/* <div onClick={togglePopover} className={popoverShadow ? 'popoverShadow' : 'hide'}>
-      </div> */}
       <h1 className='mainHeader'>Credit Utilization Calculator</h1>
       <div className='calculator'>
         <form>
@@ -101,7 +83,6 @@ export default function App() {
                   index={index}
                   import key={uniqid()}
                   update={updateCard}
-                  togglePopover={togglePopover}
                 />
               )
             })

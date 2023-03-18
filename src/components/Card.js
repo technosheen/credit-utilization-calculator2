@@ -1,44 +1,25 @@
 import React, {useState, useEffect} from "react";
 
-const styleValue = (value) => {
-    // If 0 or falsy, return empty string
-    if (!value) return '';
-
-    // Remove styling
-    value = unstyleValue(value);
-
-    // Style with commas and '$'
-    value = '$' + (value.toLocaleString("en-US"));
-    return value;
-};
-
-const unstyleValue = (value) => {
-    // If value is styled
-    if (typeof value === 'string'){
-        // Remove all non-numbers and cast as int
-        value = parseInt(value.replace(/[^0-9]/g, ""))
-    }
-    return value;
-}
 
 
 
 export default function Card(props) {
-    const { card, index, update, togglePopover} = props;
-
+    const { card, index, update} = props;
+    const charMax = 8;
     const [cardObj, setCardObj] = useState(card);
     const [displayValues, setDisplayValues] = useState({
         balance: styleValue(cardObj.balance),
         limit: styleValue(cardObj.limit)
-    })
-    const charMax = 8;
-
+    });
+    const overlay = document.getElementById('overlay' + index);
+    const popover = document.getElementById('pop' + index);
+    const [overlayIsOpen, setOverlayIsOpen] = useState(false);
 
     const handleInput = e => {
         let {name, value} = e.target;
+
+        // Remove any display styling
         const hasOnlyNumbers = /^\d+$/.test(value);
-    
-        // Remove display styling
         value = hasOnlyNumbers ? value : unstyleValue(value);
 
         // Update child if input has changed
@@ -63,13 +44,27 @@ export default function Card(props) {
     }, [cardObj]);
 
 
-    const handleHelp = () => { // TODO: implement popover
-        togglePopover();
+    const toggleOverlay = (e) => { 
+        let isVisible = e.target.hasAttribute('open');
+        setOverlayIsOpen(isVisible);
+        if (isVisible) overlay.style.position = 'absolute';
     };
 
+    const closePopover = (e) => {
+        e.preventDefault();
+        if (popover.hasAttribute('open')){
+                overlay.style.position = 'relative'
+                popover.removeAttribute('open');
+            }
+    }
 
     return (
         <div className='card'>
+            <div 
+                id={'overlay' + index} 
+                className={overlayIsOpen ? 'popOverlay' : 'hide'} 
+                onClick={closePopover}>
+            </div>
             <div className='inputLabels'>
                 <label htmlFor={'balance' + index}>
                     {'Card ' + (index + 1) + ' balance'}
@@ -78,11 +73,12 @@ export default function Card(props) {
                     <label htmlFor={'limit' + index}>
                         {'Card ' + (index + 1) + ' limit'}
                     </label>
-                    <details>
+                    <details id={'pop' + index} onToggle={toggleOverlay}>
                         <summary>?</summary>
                         <div className='popover'>
                             <h5 className='popoverHeading'>Card Balance / Limit</h5>
                             <p className='popoverBody'>Your card's balance and limit can be found on your credit card statement.</p>
+                            <button onClick={closePopover} className='close'>Close</button>
                         </div>
                     </details>
                 </div>
@@ -107,4 +103,26 @@ export default function Card(props) {
             </div>
         </div>
     );
+}
+
+
+const styleValue = (value) => {
+    // If 0 or falsy, return empty string
+    if (!value) return '';
+
+    // Remove styling
+    value = unstyleValue(value);
+
+    // Style with commas and '$'
+    value = '$' + (value.toLocaleString("en-US"));
+    return value;
+};
+
+const unstyleValue = (value) => {
+    // If value is styled
+    if (typeof value === 'string'){
+        // Remove all non-numbers and cast as int
+        value = parseInt(value.replace(/[^0-9]/g, ""))
+    }
+    return value;
 }
