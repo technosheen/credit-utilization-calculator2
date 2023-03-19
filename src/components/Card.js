@@ -20,7 +20,8 @@ export default function Card(props) {
 
         // Remove any display styling
         const hasOnlyNumbers = /^\d+$/.test(value);
-        value = hasOnlyNumbers ? value : unstyleValue(value);
+        value = hasOnlyNumbers ? parseInt(value) : unstyleValue(value);
+
 
         // Update child if input has changed
         setCardObj(() => {

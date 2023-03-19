@@ -50,12 +50,22 @@ export default function App() {
     let total;
     let subtotals = {balance: 0, limit: 0};
     
-    cards.forEach(card => {
-      if (!card.limit) return; // Don't divide by zero
-      // Calculate single card usage & aggregate totals
-      card.usage = ((card.balance * 100) / card.limit).toFixed(2);
-      subtotals.balance += !card.balance ? 0 : card.balance;
+    cards.forEach((card, i) => {
+      // Aggregate values for total usage
+      subtotals.balance += card.balance;
       subtotals.limit += card.limit;
+
+      // Don't divide by zero
+      if (!card.limit) return; 
+
+      // Calculate card usage ratio
+      let temp = ((card.balance * 100) / card.limit).toFixed(2);
+
+      // Update card
+      setCards( () => {
+        cards[i].usage = temp;
+        return cards;
+      });
     })
 
     // Calculate total credit usage
