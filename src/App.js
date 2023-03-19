@@ -69,7 +69,7 @@ export default function App() {
     })
 
     // Calculate total credit usage
-    total = !subtotals.limit && !subtotals.balance ?
+    total = !subtotals.limit ?
     0 : ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
 
     // Display results
