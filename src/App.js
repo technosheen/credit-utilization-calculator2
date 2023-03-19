@@ -10,6 +10,7 @@ export default function App() {
   const [isMax, setIsMax] = useState(false);
 
   useEffect(() => {
+    // Limit the number of inputs to 5 cards
     setIsMax( cards.length === 5 ? true : false); 
   }, [cards]);
 
@@ -23,25 +24,25 @@ export default function App() {
 
   const rmCardField = (e) => {
     e.preventDefault();
-    // Find and remove last card 
-    let rmIndex = cards.length - 1;
+    // Remove last card 
     setCards((oldCards) => {
       oldCards.pop();
       return [...oldCards];
     });
   };
 
-
+  // Updates cards array without re-rendering
   const updateCard = (childCard, index) => { 
     // Original card values
     const oldBalance = cards[index].balance;
     const oldLimit = cards[index].limit;
 
     if (oldBalance !== childCard.balance || oldLimit !== childCard.limit) {
-      // Add user input values
+      // Update card balance/limit
       cards[index] = childCard;
-      // Update card's usage ratio
-      if (!childCard.limit) {
+
+      // Update card usage ratio
+      if (!childCard.limit || !childCard.balance) {
         cards[index].usage = 0;
       } else {
         cards[index].usage = ((childCard.balance * 100) / childCard.limit).toFixed(2)
@@ -50,15 +51,15 @@ export default function App() {
     return;
   };
 
-
+  // NOTE: Formula for percent usage -- balance * 100 / limit
   useEffect(() => {
-    // Update total usage when cards change
+    // Update total usage ratio when cards change
     let total;
     let subtotals = {balance: 0, limit: 0};
   
     // Aggregate values
     cards.forEach((card, i) => {
-      if (!card.limit){
+      if (!card.limit) {
         // If limit is zero, usage is zero
         subtotals.balance += 0;
       } else {
@@ -73,11 +74,9 @@ export default function App() {
     setTotalCreditUsage(total);
   }, [cards])
 
-
-  // NOTE: Formula for percent usage -- balance * 100 / limit
   const handleCalculate = (e) => {
     e.preventDefault();
-    // Force re-render to update total usage
+    // Force re-render to update usages
     setCards([...cards]);
     // Display results
     setShowResults(true);

@@ -4,6 +4,8 @@ import uniqid from 'uniqid';
 export default function Results(props) { 
     const { totalUsage, cards } = props;
 
+    // Highlight usages which exceed 30%
+    // (30% is the recommended max usage)
     const checkUsage = (usage) => {
         return usage > 30.0 ? 'red' : 'black';
     }

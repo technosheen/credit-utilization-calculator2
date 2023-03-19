@@ -23,14 +23,12 @@ export default function Card(props) {
         const hasOnlyNumbers = /^\d+$/.test(value);
         value = hasOnlyNumbers ? parseInt(value) : unstyleValue(value);
 
-
-        // Update child ONLY if input has changed
+        // Update child if input has changed
         setCardObj((oldCard) => {
             return oldCard[name] !== value ?
                 {...oldCard, [name]: value} :
                 oldCard;
         });
-
         // Update cards array in parent
         value = value || 0;
         update({...cardObj, [name]: value}, index);
@@ -42,11 +40,11 @@ export default function Card(props) {
         setDisplayValues({balance: bal, limit: lim});
     }, [cardObj]);
 
-
     const toggleOverlay = (e) => { 
         e.preventDefault();
         let isVisible = e.target.hasAttribute('open');
         setOverlayIsOpen(isVisible);
+        // Place overlay above content, beneath popover
         if (isVisible) overlay.style.position = 'absolute';
     };
 
@@ -86,7 +84,7 @@ export default function Card(props) {
     );
 }
 
-
+// Styles numbers to US conventions
 const styleValue = (value) => {
     // If 0 or falsy, return empty string
     if (!value) return '';
@@ -99,6 +97,7 @@ const styleValue = (value) => {
     return value;
 };
 
+// Removes number styling
 const unstyleValue = (value) => {
     // If value is styled
     if (typeof value === 'string') {
