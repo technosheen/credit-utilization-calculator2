@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     setIsMax( cards.length === 5 ? true : false); 
-}, [cards]);
+  }, [cards]);
 
 
   const addCardField = (e) => {
@@ -47,6 +47,7 @@ export default function App() {
   // NOTE: Formula for percent usage -- balance * 100 / limit
   const handleCalculate = (e) => {
     e.preventDefault();
+    let total;
     let subtotals = {balance: 0, limit: 0};
     
     cards.forEach(card => {
@@ -57,22 +58,28 @@ export default function App() {
       subtotals.limit += card.limit;
     })
 
-    // If fields are empty, throw error
-    if (!subtotals.balance && !subtotals.limit) {
-      // TODO: displayError
-      return;
-    }
+    // Calculate total credit usage
+    total = !subtotals.balance && !subtotals.limit ?
+    0 : ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
 
-    // Calculate total credit usage & display results
-    const total = ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
+    // Display results
     setTotalCreditUsage(total);
     setShowResults(true);
   };
 
+  const getBtnStyle = (type) => {
+    // Hide '+' btn if reached max card#
+    if ( type === 'add') {
+      return isMax ? 'disabledBtn' : 'addBtn';
+    }
+    // Hide '-' btn if only one card
+    return cards.length > 1 ? 'addBtn' : 'hide';
+  }
+
 
   return (
     <div id='app'>
-      <h1 className='mainHeader'>Credit Utilization Calculator</h1>
+      <h1>Credit Utilization Calculator</h1>
       <div className='calculator'>
         <form>
           {
@@ -89,17 +96,8 @@ export default function App() {
           }
         </form>
         <div className='addButtonRow'>
-        <button 
-            onClick={rmCardField}
-            className={cards.length > 1 ? 'addBtn' : 'hide'}>
-              - Card
-          </button>
-          <button 
-            disabled={isMax} 
-            onClick={addCardField} 
-            className={isMax ? 'disabledBtn' : 'addBtn'}>
-              + Card
-          </button>
+          <button onClick={rmCardField} className={getBtnStyle('remove')}>- Card</button>
+          <button onClick={addCardField} className={getBtnStyle('add')} disabled={isMax}>+ Card</button>
         </div>
         <div className='buttonRow'>
           <button className='submit' onClick={handleCalculate}>Calculate</button>

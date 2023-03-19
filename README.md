@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+Credit Utilization App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app calculates credit utilization using current credit card balance and limit.
+Users may add up to 5 credit cards by clicking the '+card' button.
+When all information has been added, the total and individual credit usages are calculated.
+Individual credit usage is the the percent usage for a single card, while
+total credit usage is percentage usage across all credit cards
 
-## Available Scripts
+Credit utilizations greater than 30% will be displayed in red text, since credit bureaus reccomend keeping credit utilization below 30%.
 
-In the project directory, you can run:
+The calculations are derived with the following formulas:
 
-### `npm start`
+    Individual:
+    (balance * 100) / limit
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    Total:
+    (total balance * 100) / total limit
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    EXAMPLE:
+    card 1 - balance: 100, limit: 1000
+    card 2 - balance: 200, limit: 2400
+    card 3 - balance: 300, limit: 4000
 
-### `npm test`
+    card 1 usage: (100 * 100) / 1000 = 10.00%
+    card 2 usage: (200 * 100) / 2400 =  8.33%
+    card 3 usage: (300 * 100) / 4000 =  7.50%
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    total usage: [(100 + 200 + 300) * 100] / (1000 + 2400 + 4000) = 8.11%
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Installation steps
+1. git clone git@github.com:kdevay/credit-utilization-calculator.git
+2. cd credit-utilization-calculator
+3. npm install - install dependencies
+4. npm start - run the app in development mode

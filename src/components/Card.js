@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from "react";
-
-
+import Labels from './Labels'
 
 
 export default function Card(props) {
     const { card, index, update} = props;
+    const overlay = document.getElementById('overlay' + index);
+    const popover = document.getElementById('pop' + index);
     const charMax = 8;
     const [cardObj, setCardObj] = useState(card);
+    const [overlayIsOpen, setOverlayIsOpen] = useState(false);
     const [displayValues, setDisplayValues] = useState({
         balance: styleValue(cardObj.balance),
         limit: styleValue(cardObj.limit)
     });
-    const overlay = document.getElementById('overlay' + index);
-    const popover = document.getElementById('pop' + index);
-    const [overlayIsOpen, setOverlayIsOpen] = useState(false);
+
 
     const handleInput = e => {
         let {name, value} = e.target;
@@ -24,10 +24,9 @@ export default function Card(props) {
 
         // Update child if input has changed
         setCardObj(() => {
-            if (cardObj[name] !== value) {
-                return {...cardObj, [name]: value};
-            }
-            return cardObj;
+            return cardObj[name] !== value ?
+                {...cardObj, [name]: value} :
+                cardObj;
         });
     
         // Update cards array in parent
@@ -35,11 +34,9 @@ export default function Card(props) {
         update({...cardObj, [name]: value}, index);
     };
 
-    useEffect(() => {
-        // Style input values on change
+    useEffect(() => { // Style inputs on change
         let bal = styleValue(cardObj.balance)
         let lim = styleValue(cardObj.limit)
-        
         setDisplayValues({balance: bal, limit: lim});
     }, [cardObj]);
 
@@ -62,40 +59,21 @@ export default function Card(props) {
         <div className='card'>
             <div 
                 id={'overlay' + index} 
-                className={overlayIsOpen ? 'popOverlay' : 'hide'} 
-                onClick={closePopover}>
+                onClick={closePopover}
+                className={overlayIsOpen ? 'popOverlay' : 'hide'}>
             </div>
-            <div className='inputLabels'>
-                <label htmlFor={'balance' + index}>
-                    {'Card ' + (index + 1) + ' balance'}
-                </label>
-                <div className='helpDiv'>
-                    <label htmlFor={'limit' + index}>
-                        {'Card ' + (index + 1) + ' limit'}
-                    </label>
-                    <details id={'pop' + index} onToggle={toggleOverlay}>
-                        <summary>?</summary>
-                        <div className='popover'>
-                            <h5 className='popoverHeading'>Card Balance / Limit</h5>
-                            <p className='popoverBody'>Your card's balance and limit can be found on your credit card statement.</p>
-                            <button onClick={closePopover} className='close'>Close</button>
-                        </div>
-                    </details>
-                </div>
-            </div>
+            <Labels index={index} toggleOverlay={toggleOverlay} closePopover={closePopover}/>
             <div className='inputRow'>
                 <input 
-                    maxLength={charMax}
-                    // pattern="[0-9]+"
                     name='balance'
+                    maxLength={charMax}
                     id={'balance' + index}
                     onChange={handleInput}
                     value={displayValues.balance}>
                 </input>
                 <input 
-                    maxLength={charMax}
-                    // pattern="[0-9]+"
                     name='limit'
+                    maxLength={charMax}
                     id={'limit' + index}
                     onChange={handleInput}
                     value={displayValues.limit}>
