@@ -31,14 +31,14 @@ The calculations are derived with the following formulas:
 
 
 ## Installation steps:
-clone repository
+clone repository  
 `git clone git@github.com:kdevay/credit-utilization-calculator.git`
 
-navigate to directory
+navigate to directory  
 `cd credit-utilization-calculator`
 
-install dependencies
+install dependencies  
 `npm install`
 
-run the app in development mode
+run the app in development mode  
 `npm start`
