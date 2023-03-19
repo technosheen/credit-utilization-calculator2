@@ -61,16 +61,20 @@ export default function App() {
     cards.forEach((card, i) => {
       if (!card.limit) {
         // If limit is zero, usage is zero
+        subtotals.limit += 0
         subtotals.balance += 0;
       } else {
         subtotals.balance += card.balance;
+        subtotals.limit += card.limit;
       }
-      subtotals.limit += card.limit;
     })
 
     // Calculate total credit usage
-    total = !subtotals.limit ?
-    0 : ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
+    if (!subtotals.limit || !subtotals.balance) {
+      total = 0;
+    } else {
+      total = ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
+    }
     setTotalCreditUsage(total);
   }, [cards])
 
