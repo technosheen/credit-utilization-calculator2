@@ -26,7 +26,7 @@ export default function App() {
     // Find and remove last card 
     let rmIndex = cards.length - 1;
     setCards((oldCards) => {
-      oldCards.splice(0, rmIndex);
+      oldCards.pop();
       return [...oldCards];
     });
   };
