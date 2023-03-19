@@ -11,7 +11,7 @@ export default function Results(props) {
     return (
         <div>
             <div className='usageRow'>
-                <label className='outputLabels' htmlFor='totalUsage'>
+                <label className='outputTop' htmlFor='totalUsage'>
                     Total Credit Usage:
                 </label>
                 <output className={checkUsage(totalUsage)} id='totalUsage'>

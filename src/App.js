@@ -104,7 +104,7 @@ export default function App() {
             })
           }
         </form>
-        <div className='addButtonRow'>
+        <div className='btnFloatRight'>
           <button onClick={rmCardField} className={getBtnStyle('remove')}>- Card</button>
           <button onClick={addCardField} className={getBtnStyle('add')} disabled={isMax}>+ Card</button>
         </div>
