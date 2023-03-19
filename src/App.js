@@ -34,15 +34,18 @@ export default function App() {
 
   const updateCard = (childCard, index) => { 
     // Original card values
-    const balanceOG = cards[index].balance;
-    const limitOG = cards[index].limit;
+    const oldBalance = cards[index].balance;
+    const oldLimit = cards[index].limit;
 
-    if (balanceOG !== childCard.balance || limitOG !== childCard.limit) {
+    if (oldBalance !== childCard.balance || oldLimit !== childCard.limit) {
       // Add user input values
       cards[index] = childCard;
       // Update card's usage ratio
-      cards[index].usage = !childCard.limit ? 
-      0 :((childCard.balance * 100) / childCard.limit).toFixed(2);
+      if (!childCard.limit) {
+        cards[index].usage = 0;
+      } else {
+        cards[index].usage = ((childCard.balance * 100) / childCard.limit).toFixed(2)
+      }
     }
     return;
   };
@@ -55,8 +58,12 @@ export default function App() {
   
     // Aggregate values
     cards.forEach((card, i) => {
-      // If limit is zero, usage is zero
-      subtotals.balance += !card.limit ? 0 : card.balance;
+      if (!card.limit){
+        // If limit is zero, usage is zero
+        subtotals.balance += 0;
+      } else {
+        subtotals.balance += card.balance;
+      }
       subtotals.limit += card.limit;
     })
 

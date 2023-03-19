@@ -14,6 +14,7 @@ export default function Results(props) {
                 <label className='outputTop' htmlFor='totalUsage'>
                     Total Credit Usage:
                 </label>
+
                 <output className={checkUsage(totalUsage)} id='totalUsage'>
                     { totalUsage + '%' }
                 </output>
@@ -22,12 +23,15 @@ export default function Results(props) {
                 cards.map((card, index) => {
                     return(
                         <div className='usageRow' key={uniqid()}>
+
                             <label className='outputLabels' htmlFor={'output' + (index + 1)}>
                                 { 'Card ' + (index + 1) + ' Usage:'}
                             </label>
+
                             <output id={'output' + index} className={checkUsage(card.usage)}>
                                 {card.usage + '%'}
                             </output>
+
                         </div>
                     );
                 })

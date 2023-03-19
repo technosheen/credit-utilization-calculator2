@@ -32,7 +32,7 @@ export default function Card(props) {
         });
 
         // Update cards array in parent
-        value = !value ? 0 : value;
+        value = value || 0;
         update({...cardObj, [name]: value}, index);
     };
 
@@ -52,10 +52,10 @@ export default function Card(props) {
 
     const closePopover = (e) => {
         e.preventDefault();
-        if (popover.hasAttribute('open')){
-                overlay.style.position = 'relative'
-                popover.removeAttribute('open');
-            }
+        if (popover.hasAttribute('open')) {
+            overlay.style.position = 'relative';
+            popover.removeAttribute('open');
+        }
     }
 
     return (
@@ -101,7 +101,7 @@ const styleValue = (value) => {
 
 const unstyleValue = (value) => {
     // If value is styled
-    if (typeof value === 'string'){
+    if (typeof value === 'string') {
         // Remove all non-numbers and cast as int
         value = parseInt(value.replace(/[^0-9]/g, ""))
     }
