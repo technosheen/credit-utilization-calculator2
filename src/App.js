@@ -54,12 +54,12 @@ export default function App() {
       if (!card.limit) return; // Don't divide by zero
       // Calculate single card usage & aggregate totals
       card.usage = ((card.balance * 100) / card.limit).toFixed(2);
-      subtotals.balance += card.balance;
+      subtotals.balance += !card.balance ? 0 : card.balance;
       subtotals.limit += card.limit;
     })
 
     // Calculate total credit usage
-    total = !subtotals.limit ?
+    total = !subtotals.limit && !subtotals.balance ?
     0 : ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
 
     // Display results
