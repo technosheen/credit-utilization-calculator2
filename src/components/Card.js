@@ -16,6 +16,7 @@ export default function Card(props) {
 
 
     const handleInput = e => {
+        e.preventDefault();
         let {name, value} = e.target;
 
         // Remove any display styling
@@ -23,13 +24,13 @@ export default function Card(props) {
         value = hasOnlyNumbers ? parseInt(value) : unstyleValue(value);
 
 
-        // Update child if input has changed
-        setCardObj(() => {
-            return cardObj[name] !== value ?
-                {...cardObj, [name]: value} :
-                cardObj;
+        // Update child ONLY if input has changed
+        setCardObj((oldCard) => {
+            return oldCard[name] !== value ?
+                {...oldCard, [name]: value} :
+                oldCard;
         });
-    
+
         // Update cards array in parent
         value = !value ? 0 : value;
         update({...cardObj, [name]: value}, index);
@@ -43,6 +44,7 @@ export default function Card(props) {
 
 
     const toggleOverlay = (e) => { 
+        e.preventDefault();
         let isVisible = e.target.hasAttribute('open');
         setOverlayIsOpen(isVisible);
         if (isVisible) overlay.style.position = 'absolute';

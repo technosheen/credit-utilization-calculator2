@@ -18,62 +18,61 @@ export default function App() {
     e.preventDefault();
     // Create and add new card
     let newCard = {balance: 0, limit: 0, usage: 0};
-    setCards(() => cards.concat(newCard));
+    setCards((oldCards) => [...oldCards, newCard]);
   };
 
   const rmCardField = (e) => {
     e.preventDefault();
     // Find and remove last card 
     let rmIndex = cards.length - 1;
-    setCards(cards.splice(0, rmIndex));
-  };
-
-
-  const updateCard = (card, index) => { 
-    // Original card values
-    const balanceOG = cards[index].balance;
-    const limitOG = cards[index].limit;
-
-    setCards(() => {
-      if (balanceOG !== card.balance || limitOG !== card.limit) {
-        // Add user input values
-        cards[index] = card;
-      }
-      return cards;
+    setCards((oldCards) => {
+      oldCards.splice(0, rmIndex);
+      return [...oldCards];
     });
   };
 
 
-  // NOTE: Formula for percent usage -- balance * 100 / limit
-  const handleCalculate = (e) => {
-    e.preventDefault();
+  const updateCard = (childCard, index) => { 
+    // Original card values
+    const balanceOG = cards[index].balance;
+    const limitOG = cards[index].limit;
+
+    if (balanceOG !== childCard.balance || limitOG !== childCard.limit) {
+      // Add user input values
+      cards[index] = childCard;
+      // Update card's usage ratio
+      cards[index].usage = !childCard.limit ? 
+      0 :((childCard.balance * 100) / childCard.limit).toFixed(2);
+    }
+    return;
+  };
+
+
+  useEffect(() => {
+    // Update total usage when cards change
     let total;
     let subtotals = {balance: 0, limit: 0};
-    
+  
+    // Aggregate values
     cards.forEach((card, i) => {
-      // Aggregate values for total usage
-      subtotals.balance += card.balance;
+      // If limit is zero, usage is zero
+      subtotals.balance += !card.limit ? 0 : card.balance;
       subtotals.limit += card.limit;
-
-      // Don't divide by zero
-      if (!card.limit) return; 
-
-      // Calculate card usage ratio
-      let temp = ((card.balance * 100) / card.limit).toFixed(2);
-
-      // Update card
-      setCards( () => {
-        cards[i].usage = temp;
-        return cards;
-      });
     })
 
     // Calculate total credit usage
     total = !subtotals.limit ?
     0 : ((subtotals.balance * 100) / subtotals.limit).toFixed(2);
-
-    // Display results
     setTotalCreditUsage(total);
+  }, [cards])
+
+
+  // NOTE: Formula for percent usage -- balance * 100 / limit
+  const handleCalculate = (e) => {
+    e.preventDefault();
+    // Force re-render to update total usage
+    setCards([...cards]);
+    // Display results
     setShowResults(true);
   };
 
