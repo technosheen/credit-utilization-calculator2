@@ -1,6 +1,6 @@
 /* Global Styles */
 * {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'SF Pro', sans-serif;
 }
 body{
     background-color: #fafbfe;
@@ -124,10 +124,10 @@ output{
 }
 
 /* Button containers */
-.btnFloatRight{
+.btnFloatLeft{
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 10px;
 }
 .buttonRow{
@@ -148,16 +148,16 @@ output{
 }
 .addBtn{
     padding: 8px;
+    
 }
 .addBtn,
 .submit{
     border: none;
-    color: white;
-    background-color: #1a3eca;
+    color: #1d3694;
 }
 .addBtn:hover,
 .submit:hover{
-    background-color: #1d3694;
+    color: #1d3694;
 }
 
 /* Help button */

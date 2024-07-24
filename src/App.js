@@ -4,7 +4,10 @@ import Card from './components/Card';
 import Results from './components/Results';
 
 export default function App() {
-  const [cards, setCards] = useState([{balance: 0, limit: 0, usage: 0}]);
+  const [cards, setCards] = useState([
+    {balance: 0, limit: 0, usage: 0}, 
+    {balance: 0, limit: 0, usage: 0} // Added second card
+  ]);
   const [totalCreditUsage, setTotalCreditUsage] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [isMax, setIsMax] = useState(false);
@@ -17,14 +20,19 @@ export default function App() {
 
   const addCardField = (e) => {
     e.preventDefault();
-    // Create and add new card
-    let newCard = {balance: 0, limit: 0, usage: 0};
-    setCards((oldCards) => [...oldCards, newCard]);
+    // Only add new card if there are less than 5 cards
+    setCards((oldCards) => {
+      if (oldCards.length < 5) {
+        let newCard = {balance: 0, limit: 0, usage: 0};
+        return [...oldCards, newCard];
+      }
+      return oldCards;
+    });
   };
-
+  
   const rmCardField = (e) => {
     e.preventDefault();
-    // Remove last card 
+    // Remove last card
     setCards((oldCards) => {
       oldCards.pop();
       return [...oldCards];
@@ -92,7 +100,7 @@ export default function App() {
       return isMax ? 'disabledBtn' : 'addBtn';
     }
     // Hide '-' btn if only one card
-    return cards.length > 1 ? 'addBtn' : 'hide';
+    return cards.length > 2 ? 'addBtn' : 'hide';
   }
 
 
@@ -114,9 +122,9 @@ export default function App() {
             })
           }
         </form>
-        <div className='btnFloatRight'>
-          <button onClick={rmCardField} className={getBtnStyle('remove')}>- Card</button>
-          <button onClick={addCardField} className={getBtnStyle('add')} disabled={isMax}>+ Card</button>
+        <div className='btnFloatLeft'>
+        <button onClick={addCardField} className={getBtnStyle('add')} disabled={isMax}>Add additonal card</button>
+        <button onClick={rmCardField} className={getBtnStyle('remove')}>Remove card</button>
         </div>
         <div className='buttonRow'>
           <button className='submit' onClick={handleCalculate}>Calculate</button>
