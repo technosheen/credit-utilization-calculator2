@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/credit-utilization-calculator/static/css/main.7e307293.css",
+    "main.js": "/credit-utilization-calculator/static/js/main.29482094.js",
+    "index.html": "/credit-utilization-calculator/index.html",
+    "main.7e307293.css.map": "/credit-utilization-calculator/static/css/main.7e307293.css.map",
+    "main.29482094.js.map": "/credit-utilization-calculator/static/js/main.29482094.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7e307293.css",
+    "static/js/main.29482094.js"
+  ]
+}
